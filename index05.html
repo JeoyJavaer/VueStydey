@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>vue学习5-计算属性</title>
+  <script src="js/vue.min.js"></script>
+</head>
+
+
+<body>
+
+<div id="app">
+  <p>初始数据:      {{message}}</p>
+  <p>处理后的数据:  {{reversedMessage}}</p>
+</div>
+
+<script type="text/javascript">
+  new Vue({
+    el: "#app",
+    data: {
+      message: 'ABC.DEF'
+    },
+    computed:{
+      reversedMessage:function () {
+        return this.message.split('.').reverse().join('*')
+      }
+    }
+  })
+</script>
+
+</body>
+</html>

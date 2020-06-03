@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>vue学习03</title>
+  <script src="js/vue.min.js"></script>
+</head>
+<style>
+  .class1 {
+    background: #444;
+    color: #eee;
+  }
+
+</style>
+<body>
+
+<div id="app">
+  <p>{{message | capitalize}}</p>
+  <!--<div v-bind:id="rawId | formatId"></div>-->
+  <input v-model="message">
+  <input type="button" @click="onSomething" value="callMethod">
+  <pre><a :href="url">Vue学习教程</a></pre>
+
+  <p v-if="seen">控制是否可以看到</p>
+  <template v-if="ok">
+    <p1>Vue学习教程</p1>
+    <p>美滋滋学习</p>
+    <p>666</p>
+  </template>
+  <a  v-bind:href="url"></a>
+  <a :href="url"></a>
+
+</div>
+
+
+<!--<div id="app">
+    {{5+5}}<br>
+    {{ok?'YES':'NO'}}<br>
+    {{message.split('.').reverse().join('')}}
+    <div v-bind:id="'list-'+id">Vue学习</div>
+</div>-->
+
+
+<!--<div id="ap">
+    <label for="r1">修改颜色</label><input type="checkbox" v-model="use" id="r1">
+    <br><br>
+    <div v-bind:class="{'class1': use}">
+        v-bind:class 指令
+    </div>
+
+</div>-->
+
+<script type="text/javascript">
+  let vm = new Vue({
+    el: '#app',
+    data: {
+      message: "this is title",
+      seen: true,
+      ok: true,
+      url: "www.baidu.com"
+
+    },
+
+    filters: {
+      capitalize: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+      }
+    },
+    methods: {
+      onSomething: function () {
+        alert("something")
+      }
+    }
+
+  });
+</script>
+
+</body>
+</html>
