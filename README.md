@@ -1,2 +1,2 @@
-# VueStudey
+# VueStudy
 a project study Vue
