@@ -12,27 +12,49 @@
 	可用使用methods 来替代 computed，效果两者一样
 	computed 是基于他的依赖缓存，只有相关依赖发生变化时才会重新获取新知，而methods，在重新渲染的时候，函数总会重新调用执行
 
+  computed性能更好，如果不希望使用缓存，则可以使用methods属性
 
+  computed属性默认只有getter，不过需要时你可以提供一个setter方法
 -->
 <body>
 
 <div id="app">
-  <p>初始数据:      {{message}}</p>
-  <p>处理后的数据:  {{reversedMessage}}</p>
+  <p>初始数据: {{message}}</p>
+  <p>处理后的数据: {{reversedMessage}}</p>
+  <p>{{site}}</p>
 </div>
 
 <script type="text/javascript">
-  new Vue({
+  var vm = new Vue({
     el: "#app",
     data: {
-      message: 'ABC.DEF'
+      message: 'ABC.DEF',
+      name: 'Google',
+      url: 'https://www.google.com'
     },
-    computed:{
-      reversedMessage:function () {
+    computed: {
+      site: {
+        get: function () {
+          return this.name + '' + this.url
+        },
+
+        set: function (newValue) {
+          let name = newValue.split(' ')
+          this.name = name[0]
+          this.url = name[1]
+        }
+      },
+
+      reversedMessage: function () {
         return this.message.split('.').reverse().join('*')
       }
     }
   })
+
+  vm.site = '百度地址 https://www.baidu.com';
+  document.write('name:' + vm.name);
+  document.write('<br>');
+  document.write('url:' + vm.url);
 </script>
 
 </body>

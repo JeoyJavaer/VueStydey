@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue学习6-监听属性</title>
+  <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+<h1>Vue学习6-监听属性</h1>
+<div id="computed_pros">
+  千米 :<input type="text" v-model="kilometers">
+  米   :<input type="text" v-model="meters">
+</div>
+<p id="info"></p>
+
+
+<div id="app">
+  <!--通过watch来响应数据的变化-->
+  <hr>
+  <hr>
+  <p style="font-size: 25px;color: red">计数器：{{counter}}</p>
+  <button @click="counter++" style="font-size: 25px;">点我加一</button>
+</div>
+
+<script type="text/javascript">
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      counter: 1
+    },
+  });
+
+  vm.$watch('counter', function (newV, old) {
+    alert('监听数值的变化:' + old + '变为' + newV);
+  })
+
+  var vms = new Vue({
+    el: '#computed_pros',
+    data: {
+      kilometers: 0,
+      meters: 0
+    },
+    watch: {
+      kilometers: function (val) {
+        this.kilometers = val;
+        this.meters = this.kilometers * 1000;
+      },
+
+      meters: function (value) {
+        this.kilometers = value / 1000;
+        this.meters = value;
+      }
+    },
+  });
+
+  vms.$watch('kilometers', function (newVal, oldVal) {
+    document.getElementById("info").innerHTML = "修改前：" + oldVal + " 修改后" + newVal;
+  })
+
+</script>
+
+</body>
+</html>
