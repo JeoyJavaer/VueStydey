@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>09Vue.js表单</title>
+  <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+<h1>09Vue.js表单</h1>
+
+
+<div id="app">
+  <!--
+  在默认情况下，v-model在input事件中同步输入框的值和数据，但你可以添加一个修饰符lazy，从而转变
+  为在change事件中同步：
+
+  -->
+
+  <!--在change 而不是在input事件中更新-->
+  <input v-model.lazy="msg">
+
+  <!--如果想自动将用户输入的值转为Number类型，可以添加一个修饰符为number
+  给v-model来处理输入值，
+  在type=“number”时HTML中输入的值总是返回字符串类型
+  -->
+  <input type="number" v-model.number="age">
+
+  <!--trim 过滤首尾空格-->
+  <input v-model.trim="msg">
+
+</div>
+
+<!--select类表-->
+<!--<div id="app">
+  <select name="fruit" v-model="selected">
+    <option value="">选择一个网站</option>
+    <option value="www.runoob.com">Runoob</option>
+    <option value="www.google.com">Google</option>
+  </select>
+  <div id="output">
+    选择的网站是：{{selected}}
+  </div>
+
+
+</div>-->
+
+<!--<div id="div">
+  <input type="radio" id="runoob" value="Runoob" v-model="picked">
+  <label for="runoob">Runoob</label>
+
+  <input type="radio" id="google"value="Google" v-model="picked">
+  <label for="google">Google</label>
+  <br>
+  <span>选中：{{picked}}</span>
+</div>-->
+
+
+<!--复选框-->
+<!--<div id="vue">
+  <p>单个复选框:</p>
+  <input type="checkbox" id="checkbox" v-model="checked">
+  <label for="checkbox">{{checked}}</label>
+
+  <p>多个复选框：</p>
+  <input type="checkbox" id="runoob"value="Runoob" v-model="checkedNames">
+  <label for="runoob">Runoob</label>
+
+  <input type="checkbox"id="google" value="Google" v-model="checkedNames">
+  <label for="google">Google</label>
+
+  <input type="checkbox" id="taobao" value="Taobao" v-model="checkedNames">
+  <label for="taobao">taobao</label>
+  <br>
+  <span>选择的值为:{{checkedNames}}</span>
+</div>-->
+
+
+<!--输入框-->
+<!--<div id="app">
+  <p>input 元素：</p>
+  <input v-model="message" placeholder="编辑我.....">
+  <p>消息是:{{message}}</p>
+  <p style="white-space: pre">{{message2}}</p>
+  <textarea v-model="message2" placeholder="多行文本输入...."></textarea>
+</div>-->
+
+<script type="text/javascript">
+
+  new Vue({
+    el: '#app',
+    data: {
+      selected: 'Google',
+    }
+  })
+
+  /* new Vue({
+     el:'#div',
+     data:{
+       picked:'Runoob'
+     }
+   })*/
+  /*var vue = new Vue({
+    el:'#app',
+    data:{
+      message:'hello Vue.js',
+      message2:'百度一下  \r\n https://www.baidu.com'
+    }
+
+  });*/
+
+  /*new Vue({
+    el:'#vue',
+    data: {
+      checked:false,
+      checkedNames:[]
+    }
+  })*/
+
+
+</script>
+
+</body>
+</html>
