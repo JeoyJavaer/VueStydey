@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue学习7-Vue.js 样式绑定</title>
+  <script src="js/vue.min.js"></script>
+  <style type="text/css">
+    .base {
+      width: 100px;
+      height: 100px;
+    }
+
+    .active {
+      width: 100px;
+      height: 100px;
+      background: green;
+    }
+
+    .text-danger {
+      background: red;
+      font-size: 19px;
+    }
+
+
+  </style>
+
+</head>
+
+<body>
+<h1>Vue学习7-Vue.js样式绑定</h1>
+
+<div id="app">
+  <!--对象中传入多个属性来动态切换class-->
+  <!--  <div class="static" v-bind:class="{active:isActive,'text-danger':hasError}">没下雨</div>-->
+  <!--<div class="static" v-bind:class="{classObject}">下雨了classObject</div>-->
+  <div v-bind:class="classObject">外面有没有下雨</div>
+  <div v-bind:class="[activeClass,errorClass]">外面有没有下雨2</div>
+  <!-- <div v-bind:class="[errorClass,isActive?activeClass：'']">外面有没有下雨3</div>-->
+  <br/>
+  <!--vue.js 内联样式-->
+  <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">内联样式</div>
+  <!--样式对象-->
+  <div v-bind:style="styleObject">Vue样式对象</div>
+
+  <!--使用数组将多个样式对象应用到一个元素上-->
+  <div v-bind:style="[baseStyles,overridingStyles]">使用数组将多个样式对象应用到一个元素上</div>
+  <!--<div v-bind:class="{active:isActive}"></div>-->
+</div>
+
+<script type="text/javascript">
+  var vm = new Vue({
+    el: '#app',
+    data: {
+
+      baseStyles: {
+        color: 'green',
+        fontSize: '30px'
+      },
+      overridingStyles: {
+        'font-weight': 'bold'
+      },
+      styleObject: {
+        color: 'green',
+        fontSize: '30px'
+      },
+      error: {
+        value: true,
+        type: 'fatal'
+      },
+      fontSize: 30,
+      activeColor: 'green',
+      activeClass: 'active',
+      errorClass: 'text-danger',
+
+      classObject: {
+        active: true,
+        'text-danger': true
+      },
+
+      isActive: true,
+      hasError: false
+    },
+    computed: {
+      classObject: function () {
+        return {
+          base: true,
+          active: this.isActive && !this.error.value,
+          'text-danger': this.error.value && this.error.type === 'fatal'
+        }
+      }
+    }
+  });
+
+
+</script>
+
+</body>
+</html>
