@@ -7,7 +7,13 @@
   <script src="js/vue.min.js"></script>
 </head>
 
+<!--
+	computed vs methods
+	可用使用methods 来替代 computed，效果两者一样
+	computed 是基于他的依赖缓存，只有相关依赖发生变化时才会重新获取新知，而methods，在重新渲染的时候，函数总会重新调用执行
 
+
+-->
 <body>
 
 <div id="app">
