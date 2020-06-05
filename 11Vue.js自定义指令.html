@@ -32,13 +32,28 @@
 
 <body>
 <h1>11Vue.js自定义指令</h1>
-<div id="app" v-runoob:hello.a.b="message">
+<div id="app">
   <!--<p>页面载入时，input自动获取焦点</p>-->
   <!--<input v-focus/>-->
+  <!--指令函数可以接受所有的合法的JavaScript表达式，-->
+  <div v-bob="{color:'green',text:'Vue学习教程'}"></div>
 </div>
+
+<!--<div id="app" v-runoob:hello.a.b="message">
+  &lt;!&ndash;<p>页面载入时，input自动获取焦点</p>&ndash;&gt;
+  &lt;!&ndash;<input v-focus/>&ndash;&gt;
+  &lt;!&ndash;指令函数可以接受所有的合法的JavaScript表达式，&ndash;&gt;
+  <div v-bob="{color:'green',text:'Vue学习jaiochegn'}"></div>
+</div>-->
+
 
 <script type="text/javascript">
 
+  Vue.directive('bob',function (el,binding) {
+    el.innerHTML=binding.value.text;
+    el.style.backgroundColor=binding.value.color;
+
+  });
 
   Vue.directive('runoob',{
     bind:function (el,binding,vnode) {
