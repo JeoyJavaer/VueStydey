@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>15Vue.js Ajax</title>
+  <script src="js/vue.min.js"></script>
+  <script src="js/vue-router.min.js"></script>
+  <script src="js/axios.min.js"></script>
+</head>
+<!--
+  Vue.js 2.0 版本使用axios完成ajax请求
+-->
+
+<body>
+<h1>15Vue.js Ajax</h1>
+<div id="app">
+  {{info}}
+</div>
+<script type="text/javascript">
+  var vm = new Vue({
+    el: "#app",
+    data() {
+      return {
+        info: null
+      }
+    },
+
+    mounted() {
+      axios
+        .get('https://www.runoob.com/try/ajax/json_demo.json', {
+          params: {
+            uerId: 'spCs002'
+          }
+        })
+
+        .then(resonse => (this.info = resonse))
+        .catch(function (error) {
+          console.log(error)
+        });
+
+      axios.post('https://www.runoob.com/try/ajax/demo_axios_post.php', {
+        firstName: 'Chen',
+        lastName: 'he'
+      })
+        .then(response => (this.info = response.data()))
+        .catch(function (e) {
+          console.log(e)
+        })
+    }
+  });
+
+  function getUserAccount() {
+    return axios.get('/user/xxx');
+  }
+
+  function getUserPermissions() {
+    return axios.get('user/permission')
+
+  }
+
+  //并发执行多个请求
+  axios.all([getUserAccount(), getUserPermissions()])
+    .then(axios.spread(function (acct, perms) {
+      console.log(acct + perms);
+    }));
+
+</script>
+
+</body>
+</html>
