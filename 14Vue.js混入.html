@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>14Vue.js混入</title>
+  <script src="js/vue.min.js"></script>
+  <script src="js/vue-router.min.js"></script>
+
+</head>
+<!--
+  混入定义了一部分可复用的方法或者计算属性，混入对象可以包含任意组件。
+  当组件使用混入对象时，所有混入对象的选项将被混入该组件本身的选项
+
+  选项合并：
+  当组件和混入对象包含同名选项时，这些选项将以恰当的方式混合
+  比如，数据对象在内部会进行浅合并 (一层属性深度)，在和组件的数据发生冲突时以组件数据优先。
+
+  如果 methods 选项中有相同的函数名，则 Vue 实例优先级会较高
+
+
+  全局混入：
+  也可以全局注册混入对象。一旦使用全局混入对象，将会影响到所有之后创建的Vue实例。
+  使用恰当时，可以为自定义对象注入处理逻辑
+-->
+
+<body>
+<h1>14Vue.js混入</h1>
+<div id="app">
+</div>
+<script type="text/javascript">
+  // var vm = new Vue({
+  //   el: "#app",
+  //   data: {},
+  //
+  //   methods: {}
+  // });
+  //
+  // var myMixin = {
+  //   created: function () {
+  //     this.startmixin();
+  //   },
+  //
+  //   methods: {
+  //     startmixin: function () {
+  //       document.write("welcome Vue.js混入 ")
+  //     }
+  //   }
+  // };
+  // var Component = Vue.extend({
+  //   mixins: [myMixin]
+  // });
+  //
+  // var component = new Component();
+
+  Vue.mixin({
+    created:function () {
+      var myOption =this.$options.myOption;
+      if (myOption){
+        console.log(myOption)
+        document.write(myOption)
+      }
+    }
+  });
+
+  new Vue({
+    myOption:'hello'
+  })
+
+</script>
+
+</body>
+</html>

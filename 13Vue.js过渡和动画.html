@@ -6,17 +6,119 @@
   <title>13Vue.js过渡和动画</title>
   <script src="js/vue.min.js"></script>
   <script src="js/vue-router.min.js"></script>
-
+  <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
 </head>
+<!--
+  过渡动画：Vue共6种：
+  v-enter：定义进入过渡的开始状态 元素被插入之前生效，在元素被插入之后的下一帧移除
+  v-enter-active:定义进入过渡生效时的状态，在整个进入过渡的阶段中应用，在元素被插入之前生效，
+  在动画完成之后移除，这个类可以被用来定义进入过渡的过程时间，延迟和曲线函数
+  v-enter-to：定义进入过渡的结束状态，在元素被插入后下一帧生效(与此同时 v-enter 被移除)，在过渡/动画完成后移除
+
+  v-leave：定义离开过渡的开始状态，在离开过渡被触发时立即生效，下一帧移除
+  v-leave-active:定义离开过渡生效时的状态，在整个离开过渡的阶段中应用，在离开过渡被触发时立刻生效
+    在 过渡/动画完成之后移除。这个类可以别用来定义离开过渡的过程时间，延迟和曲线函数
+  v-leave-to：定义离开过渡的结束状态，在离开过渡被触发之后下一帧生效（于此同时v-leave被删除）在过渡/动画完成之后移除
+
+
+-->
+<style>
+  .bounce-enter-active {
+    animation: bounce-in 3.5s;
+  }
+
+  .bounce-leave-active {
+    animation: bounce-in 3.5s reverse;
+  }
+
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+
+    50% {
+      transform: scale(1.5);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .slide-fade-enter-active {
+    transition: all .3s ease;
+  }
+
+  .slide-fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+
+  .slide-fade-enter, .slide-fade-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+
+
+</style>
 
 <body>
 <h1>13Vue.js过渡和动画</h1>
 <div id="app">
-
+  <button v-on:click="show=!show">点击</button>
+  <transitation
+    v-on:before-enter="beforeEnter"
+    v-on:enter="enter"
+    v-on:leave="leave"
+    v-bind:css="false">
+    <p v-if="show">测试</p>
+  </transitation>
+ <!-- <transition
+      name="custom-classes-transition"
+      enter-active-class="animated tada"
+      leave-active-class="animated bounceOutRight">
+    <p v-show="show" v-bind:style="styleobj">动画实例</p>
+  </transition>-->
 </div>
-
-
 <script type="text/javascript">
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      show: true,
+      styleobj: {
+        fontSize: '30px',
+        color: 'red',
+      }
+    },
+
+    methods:{
+      beforeEnter: function (el) {
+        el.style.opacity=0;
+        el.style.transformOrigin='left'
+      },
+
+      enter:function (el,done) {
+        Velocity(el,{opacity:1,fontSize: '1.4em'},{duration:300});
+        Velocity(el,{fontSize:'1em'},{complete:done})
+      },
+
+      leave:function (el,done) {
+        Velocity(el,{translationX:'15px',rotateZ:'50deg'},{duration: 600});
+        Velocity(el, { rotateZ: '100deg' }, { loop: 2 });
+        Velocity(el, {
+          rotateZ: '45deg',
+          translateY: '30px',
+          translateX: '30px',
+          opacity: 0
+        }, { complete: done })
+
+      },
+
+
+    }
+
+
+  });
 
 </script>
 
