@@ -9,6 +9,12 @@
 </head>
 <!--
   Vue.js 2.0 版本使用axios完成ajax请求
+
+  配置的优先级顺序
+  1，lib/defaults.js < 实例的defaults属性 < 请求的config参数
+
+  拦截器
+    在请求或者响应被then 或catch 处理前拦截
 -->
 
 <body>
@@ -63,6 +69,120 @@
     .then(axios.spread(function (acct, perms) {
       console.log(acct + perms);
     }));
+
+
+  //axios API 传递相关配置创建请求
+  axios(config)
+
+  axios({method: 'post', url: '/user/12345', data: {firstName: 'Fred', lastName: 'Flinstone'}});
+
+  //请求图片
+  axios({
+    method: 'get', url: 'http://bit.ly//22m', responseType: 'stream'
+  }).then(function (response) {
+    response.data.pipe(fs.createWriteStream('avatar.jpg'))
+  });
+
+  axios.create([config]);
+  const instance = axios.create({
+    baseURI: 'https://some-domain.com/api/',
+    timeout: 1000,
+    headers: ['X-Custom-Header', 'foobar']
+  });
+
+
+  //添加请求拦截器
+  axios.interceptors.request.use(function (config) {
+
+    //发送器请求之前的操作
+
+    return config;
+
+  }, function (error) {
+    //对错误的处理
+    return Promise.reject(error)
+  });
+
+
+  //添加响应拦截器
+  axios.interceptors.response.usr(function (response) {
+    //响应数据的处理
+    return response;
+  }, function (e) {
+    //对响应错误的处理
+    return Promise.reject(e);
+  });
+
+  //移除拦截器
+  var myInterceptor = axios.interceptors.request.use(function () {
+    //
+  });
+  axios.interceptors.request.eject(myInterceptor);
+
+  //使用validateStatus 配置选项定义一个自定义http状态码的错误范围
+  axios.get('/user/info', {
+    validateStatus: function (status) {
+      return status < 500;
+    }
+  });
+
+
+  //取消 使用cancelToken 取消
+  var CancelToken = axios.CancelToken;
+  var source = CancelToken.source;
+
+  axio.get('list/info', {
+    cancelToken: source.CancelToken
+  }).catch(function (thrown) {
+    if (axios.isCancel(thrown)) {
+      console.log('Request canceld', thrown.message)
+    } else {
+      //错误处理
+    }
+  });
+  source.cancel();
+
+
+  /**
+   *   /请求时使用application/x-www-form-urlencoded
+   *   axios 默认序列化JavaScript对象为json，使用上面格式 ，需要配置如下
+   *   URLSearchParams 不是所有的浏览器均支持，除此可以用qs库来编码数据
+   *
+   */
+
+
+    //URLSearchParamsAPI
+  const parms = new URLSearchParams();
+  parms.append('param1', 'value1');
+  parms.append('params2', 'value2');
+  axios.post('/foo', parms);
+
+  //qs
+  const qs = require('qs');
+  axios.post('/foo', qs.stringify({'bar': '123'}));
+
+  //or in another way
+  import qs from 'qs';
+
+  const data = {'bar': 123};
+  const options = {
+    method: 'POST',
+    headers: {'content-type': 'application/x-www-form-urlencoded'},
+    data: qs.stringify(data),
+    url: '/foo'
+  }
+
+  axios(options)
+
+  //Node.js 环境
+  const  queryString = require('querystring');
+  axios.post('/foo',queryString.stringfy({foo:'bar'}))
+
+  //Promises axios 依赖原生的ES6 promis实现
+
+  // TypeScript 支持  axios 包含TypeScript的定义
+  import axios from "axios";
+  axios.get('/usr/?');
 
 </script>
 

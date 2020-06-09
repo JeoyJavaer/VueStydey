@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>16Vue.jsAjax(vue-resource)</title>
+  <script src="js/vue.min.js"></script>
+  <script src="js/vue-router.min.js"></script>
+  <script src="js/axios.min.js"></script>
+  <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+</head>
+<!--
+  Vue异步加载要使用vue-resource库
+
+  语法与api
+  01可以使用全局对象方式Vue.http或者在一个Vue实例的内部使用this.$http 发起http请求
+    vue-resource 提供了 7 种请求 API(REST 风格)：
+    get(url, [options])
+    head(url, [options])
+    delete(url, [options])
+    jsonp(url, [options])
+    post(url, [body], [options])
+    put(url, [body], [options])
+    patch(url, [body], [options])
+
+-->
+
+<body>
+<h1>16Vue.jsAjax(vue-resource)</h1>
+<div id="app">
+  <input type="button" @click="get()" value="获取数据">
+  <input type="button" @click="post()" value="获取数据">
+</div>
+<script type="text/javascript">
+
+  function methodPost() {
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello js'
+      },
+
+      methods: {
+        post: function () {
+          this.$http.post('https://www.baidu.com', {name: 'Vue', url: 'www.google.com'}).then(function (res) {
+            document.write(res.body)
+          }, function (error) {
+            console.log(error)
+          });
+        },
+        get: function () {
+          this.$http.get('https://www.baidu.com', {params: {a: 1, b: 2}}).then(function (res) {
+            document.write(res.body)
+          }, function () {
+            console.log('error')
+          });
+        }
+      }
+    });
+  }
+
+  window.onload = function () {
+    // methodGet();
+    methodPost();
+  }
+
+  //01 基于全局Vue对象使用http
+  Vue.http.get('url',[options]).then(successCallback,errorCallback);
+  Vue.http.post('url',[body],[options]).then(successCallback,errorCallback);
+  //01 在一个Vue实例内部使用$http
+  this.$http.get('url',[options]);
+  this.$http.post('url',[body],[options]);
+
+
+</script>
+
+</body>
+</html>
